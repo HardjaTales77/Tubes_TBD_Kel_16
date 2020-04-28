@@ -1,23 +1,18 @@
+/*
+	Fungsi ini untuk mengembalikan semua kata yang ada.
+*/
 ALTER FUNCTION insertTabelKata
 (
 )
 RETURNS @res table(
 	id int,
-	kata varchar(50),
-	IDF float
+	kata varchar(50)
 )
 BEGIN
 	DECLARE @temp table(
 		kata varchar(50)
 	)
-	DECLARE @temp2 table(
-		kata varchar(50),
-		idf float
-	)
-
-	DECLARE @totalBuku int
-	SELECT @totalBuku = COUNT(IdB) FROM Buku
-
+	
 	DECLARE curJudul CURSOR
 	FOR
 	SELECT Judul_Buku
@@ -42,42 +37,27 @@ BEGIN
 	CLOSE curJudul
 	DEALLOCATE curJudul
 
-	INSERT INTO @temp2
-	SELECT kata, LOG(CAST(@totalBuku as float)/CAST(COUNT(kata) as float))
-	FROM @temp
-	GROUP BY kata
-
 	DECLARE curKata CURSOR 
 	FOR
 	SELECT kata
-	FROM @temp2
+	FROM @temp
 	ORDER BY kata
-
-	DECLARE curIdf CURSOR
-	FOR
-	SELECT idf
-	FROM @temp2
-	ORDER BY kata
-
+	
 	OPEN curKata
-	OPEN curIdf
-
+	
 	DECLARE @cK varchar(50)
-	DECLARE @cI float
 	DECLARE @counter int
 	SET @counter=1
 
 	FETCH NEXT FROM curKata INTO @ck
-	FETCH NEXT FROM curIdf INTO @cI
 
 	WHILE(@@FETCH_STATUS=0)
 	BEGIN
 		INSERT INTO @res
-		SELECT @counter,@ck,@cI
+		SELECT @counter,@ck
 
 		SET @counter=@counter+1
 		FETCH NEXT FROM curKata INTO @ck
-		FETCH NEXT FROM curIdf INTO @cI
 	END
 
 	CLOSE curKata
@@ -88,9 +68,3 @@ BEGIN
 RETURN
 END
 
-INSERT INTO Kata
-SELECT id,kata,idf
-FROM insertTabelKata()
-
-SELECT *
-FROM Kata
