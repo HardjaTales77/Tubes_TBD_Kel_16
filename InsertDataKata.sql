@@ -43,7 +43,7 @@ BEGIN
 	DEALLOCATE curJudul
 
 	INSERT INTO @temp2
-	SELECT kata, CAST(COUNT(kata) as float)/CAST(@totalBuku as float)
+	SELECT kata, LOG(CAST(@totalBuku as float)/CAST(COUNT(kata) as float))
 	FROM @temp
 	GROUP BY kata
 
@@ -91,3 +91,6 @@ END
 INSERT INTO Kata
 SELECT id,kata,idf
 FROM insertTabelKata()
+
+SELECT *
+FROM Kata
