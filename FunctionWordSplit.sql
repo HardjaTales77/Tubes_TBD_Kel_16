@@ -31,6 +31,13 @@ BEGIN
 
 			SET @strp=''
 		END
+		ELSE IF(@temp=',')
+		BEGIN
+			INSERT INTO @res
+			SELECT @strp
+
+			SET @strp=''
+		END
 		ELSE
 		BEGIN
 			SET @strp = @strp+@temp
