@@ -3,11 +3,12 @@ ALTER FUNCTION getEksemplar
 	@idBuku int
 )
 RETURNS @res table(
-	IdE int
+	IdE int,
+	status int
 )
 BEGIN
 	INSERT INTO @res
-	SELECT IdE
+	SELECT IdE, Status
 	FROM Eksemplar
 	WHERE IdB=@idBuku
 
