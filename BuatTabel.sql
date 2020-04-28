@@ -49,14 +49,14 @@ CREATE TABLE Users(
 CREATE TABLE Mencari(
 	IdU int,
 	IdB int,
-	waktuCari Datetime
+	waktuCari Date
 )
 
 CREATE TABLE Meminjam(
 	IdU int,
 	IdE int,
-	waktuPinjam Datetime,
-	waktuPengembalian Datetime
+	waktuPinjam Date,
+	waktuPengembalian Date
 )
 
 CREATE TABLE Kata(
