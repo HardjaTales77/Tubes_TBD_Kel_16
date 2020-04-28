@@ -1,3 +1,8 @@
+/*Merupakan fungsi untuk melihat daftar pinjam 
+	Masukan : idMember
+	Keluaran : Buku-buku yang dipinjam
+	'tidak melihat status buku'
+*/
 alter procedure LihatDaftarPinjam(@idMember INT) AS
 DECLARE @idM INT
 SET @idM=@idMember
@@ -43,4 +48,4 @@ DECLARE curBuku CURSOR
 	FROM @tbl_temp
 go
 
-exec LihatDaftarPinjam 1
+/*exec LihatDaftarPinjam 1*/
