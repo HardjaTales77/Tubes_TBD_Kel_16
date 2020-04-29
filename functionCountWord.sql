@@ -1,3 +1,10 @@
+/*
+	Fungsi ini digunakan untuk menghitung berapa banyak kata yang muncul
+
+	Input : judul buku
+	Keluaran : id kata, kata, jumlah(berapa kali kata yang muncul)
+*/
+
 ALTER FUNCTION countWord(
 	@masukan_kalimat varchar(100)
 )
