@@ -1,3 +1,7 @@
+/*
+	Fungsi ini digunakan untuk mengembalikan semua tag dari sebuah buku
+	Menerima input id buku dan mengembalikan tag
+*/
 CREATE FUNCTION getTag
 (
 	@IdBuku int
