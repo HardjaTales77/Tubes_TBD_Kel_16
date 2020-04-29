@@ -1,3 +1,6 @@
+/*
+	Fungsi ini untuk menghitung bilangan kuadrat
+*/
 CREATE FUNCTION Kuadrat(
 	@angka int
 )
