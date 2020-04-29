@@ -1,3 +1,8 @@
+/*
+	Fungsi ini berfungsi untuk mengembalikan seluruh eksemplar sebuah buku
+	Input : Id Buku
+	Output : Id Eksemplar dan status(bisa di pinjam atau tidak)
+*/
 ALTER FUNCTION getEksemplar
 (
 	@idBuku int
