@@ -1,3 +1,7 @@
+/*
+	Script ini berfungsi membuat tabel
+*/
+
 DROP TABLE Tag
 DROP TABLE Buku
 DROP TABLE Author
