@@ -1,3 +1,8 @@
+/*
+- Function ini digunakan untuk mencari Id User
+- Input Function ini merupakan nama dari User
+*/
+
 ALTER FUNCTION cariIdUser
 (
 	@namaUser varchar(40)
