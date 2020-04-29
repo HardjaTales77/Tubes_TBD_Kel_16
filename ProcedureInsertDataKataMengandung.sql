@@ -1,3 +1,8 @@
+/*
+	Prosedur ini berfungsi untuk memasukkan data kepada tabel kata dan mengandung.
+	Prosedur ini juga menghitung bobot dari setiap kata yang ada.
+	Prosedur tidak menerima masukan dan tidak menghasilkan output.
+*/
 ALTER PROCEDURE InsertBobotKatadanMengandung
 AS
 	DECLARE @temp table(
