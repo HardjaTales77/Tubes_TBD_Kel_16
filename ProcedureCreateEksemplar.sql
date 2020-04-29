@@ -1,3 +1,8 @@
+/*
+	Prosedur ini berfungsi untuk menambahkan kopi dari sebuah buku.
+	Menerima masukan judul buku.
+	Tidak ada output.
+*/
 ALTER PROCEDURE addEksemplar @judul varchar(100)
 AS
 	DECLARE @idB int
