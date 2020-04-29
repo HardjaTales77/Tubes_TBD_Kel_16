@@ -1,3 +1,6 @@
+/*
+  Script ini berisi data dummy
+*/
 INSERT INTO Users SELECT 1,'John Doe'
 INSERT INTO Users SELECT 2,'Gary Stu'
 INSERT INTO Users SELECT 3,'Mary Sue'
