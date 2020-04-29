@@ -51,10 +51,10 @@ ALTER PROCEDURE pengembalianBuku
 	SET Status = 1
 	WHERE IdE = @idEksemplar
 
+go
+
 exec pengembalianBuku 'John Doe','Harry Potter and The Philosopher Stone'
 
-select *
-from Meminjam
 /*Asumsi-asumsi
 - Orang tidak akan mengembalikan buku yang tidak di pinjam
 - Orang tidak akan meminjam 2 eksemplar dengan judul buku yang sama
