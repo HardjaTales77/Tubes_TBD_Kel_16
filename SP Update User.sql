@@ -1,3 +1,10 @@
+/*
+   sp ini merupakan procedure untuk meng-update nama user
+   sp ini menerima parameter masukan berupa id user yang 
+   akan di ubah namanya, dan nama user baru yang akan 
+   dimasukkan kedalam database
+*/
+
 ALTER PROCEDURE updateUser (
 	@idU int,
 	@namaUser varchar(40)
