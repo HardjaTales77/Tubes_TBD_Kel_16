@@ -1,4 +1,4 @@
-CREATE PROCEDURE updateUser (
+ALTER PROCEDURE updateUser (
 	@idU int,
 	@namaUser varchar(40)
 ) as
