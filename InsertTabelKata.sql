@@ -1,5 +1,6 @@
 /*
-	Fungsi ini untuk mengembalikan semua kata yang ada.
+	Fungsi ini untuk mengembalikan semua kata yang ada dari judul buku yang ada.
+	Tidak menerima masukan apapun. Output adalah id dan kata yang ada dari semua judul buku yang ada
 */
 ALTER FUNCTION insertTabelKata
 (
