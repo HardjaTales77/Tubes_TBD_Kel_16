@@ -1,3 +1,12 @@
+/*
+	Fungsi ini digunakan untuk menghitung berapa banyak kata yang muncul
+	lalu dikalikan dengan bobot kata yang berasal dari table kata
+
+	Input : judul buku
+	Keluaran : id kata, kata, jumlah(berapa kali kata yang muncul), 
+	bobot kata(jumlah muncul kata tersebut * bobot kata yang ada di table kata)
+*/
+
 ALTER FUNCTION bobotTiapKataJudul(
 	@masukan_judul varchar(100)
 )
