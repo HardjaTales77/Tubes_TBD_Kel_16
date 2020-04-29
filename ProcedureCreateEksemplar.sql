@@ -10,9 +10,8 @@ AS
 	INSERT INTO Eksemplar
 	SELECT @countIdE,@idB,1
 
-	SELECT *
-	FROM Eksemplar
 
-	go
+EXEC addEksemplar 'Overlord'
 
-EXEC addEksemplar'Overlord'
+SELECT *
+FROM Eksemplar

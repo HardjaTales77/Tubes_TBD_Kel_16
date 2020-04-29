@@ -18,6 +18,7 @@ AS
 	SELECT kata
 	FROM wordSplit(@tag)
 
+	DECLARE @iddb int
 	DECLARE @idBBaru int
 	SELECT @idBBaru=COUNT(IdB)FROM Buku
 	SET @idBBaru=@idBBaru+1
@@ -29,7 +30,7 @@ AS
 	DECLARE @idAT int
 	SELECT @idAT=COUNT(IdT)FROM Tag
 	SET @idAT=@idAT+1
-
+	
 	DECLARE curTag CURSOR
 	FOR
 	SELECT tag
@@ -44,12 +45,14 @@ AS
 
 	WHILE(@@FETCH_STATUS=0)
 	BEGIN
-		INSERT INTO @tempTag
-		SELECT @idAT,@cT
-		FROM Tag
-		WHERE Nama_Tag!=@cT
+		IF NOT EXISTS(SELECT IdT FROM Tag WHERE Nama_Tag=@cT)
+		BEGIN
+			INSERT INTO @tempTag
+			SELECT @idAT,@cT
 
-		SET @idAT=@idAT+1
+			SET @idAT=@idAT+1
+		END
+		
 		FETCH NEXT FROM curTag INTO @cT
 	END
 
@@ -59,10 +62,11 @@ AS
 	INSERT INTO Tag 
 	SELECT id,tag
 	FROM @tempTag
-	GROUP BY id,tag
 
-	INSERT INTO Buku
-	SELECT @idBBaru,@judul
+	DECLARE CJ CURSOR
+	FOR
+	SELECT Judul_buku
+	FROM Buku
 
 	DECLARE curAuthor CURSOR
 	FOR
@@ -70,10 +74,16 @@ AS
 	FROM Author
 
 	OPEN curAuthor
+	OPEN CJ
 
+	DECLARE @flagJ int
 	DECLARE @flagA int
+	
+	DECLARE @cj varchar(100)
+	FETCH NEXT FROM CJ INTO @cj
 	DECLARE @cAu varchar(100)
 	FETCH NEXT FROM curAuthor INTO @cAu
+
 
 	WHILE(@@FETCH_STATUS=0)
 	BEGIN
@@ -81,63 +91,108 @@ AS
 		BEGIN
 			SET @flagA=0
 		END
-		ELSE
+		ELSE IF(@cAu!=@author)
 		BEGIN
 			SET @flagA=1
 		END
+		IF(@cj=@judul)
+		BEGIN
+			SET @flagJ=0
+		END
+		ELSE IF(@cj!=@judul)
+		BEGIN
+			SET @flagJ=1
+		END
 		FETCH NEXT FROM curAuthor INTO @cAu
+		FETCH NEXT FROM CJ INTO @cj
 	END
+
+	DECLARE @thisA int
 
 	IF(@flagA=1)
 	BEGIN
 		INSERT INTO Author
 		SELECT @idAB, @author
+
+		IF(@flagJ=1)
+		BEGIN
+			INSERT INTO Mengarang
+			SELECT @idAB,@idBBaru
+		END
+		ELSE
+		BEGIN
+			SELECT @iddb = IdB FROM Buku WHERE Judul_buku=@judul
+
+			INSERT INTO Mengarang
+			SELECT @idAB,@iddb
+		END
+	END
+	ELSE IF(@flagA=0)
+	BEGIN
+		SELECT @thisA=IdAuthor FROM Author WHERE Nama=@author
+		IF(@flagJ=1)
+		BEGIN
+			INSERT INTO Mengarang
+			SELECT @thisA,@idBBaru
+		END
+	END
+
+	DECLARE @countIdE int
+	SELECT @countIdE = COUNT(IdE)FROM Eksemplar
+	SET @countIdE=@countIdE+1
+
+	IF(@flagJ=1)
+	BEGIN
+		INSERT INTO Buku
+		SELECT @idBBaru,@judul
+
+		INSERT INTO Eksemplar
+		SELECT @countIdE,@idBBaru,1
+	END
+	ELSE IF(@flagJ=0)
+	BEGIN
+		INSERT INTO Eksemplar
+		SELECT @countIdE,@iddb,1
 	END
 
 	CLOSE curAuthor
+	CLOSE CJ
 	DEALLOCATE curAuthor
+	DEALLOCATE CJ
 
-	INSERT INTO Mengarang
-	SELECT @idAB,@idBBaru
-
-	INSERT INTO @tempTT
-	SELECT Tag.IdT,Tag.Nama_Tag
-	FROM Tag INNER JOIN @tempTag as t on Tag.IdT=t.id
-	ORDER BY Tag.IdT
-
-	DECLARE curTT CURSOR
-	FOR
-	SELECT id
-	FROM @tempTT
-	GROUP BY id,tag
-	ORDER BY id
-
-	OPEN curTT
-
-	DECLARE @cTT int
-
-	FETCH NEXT FROM curTT INTO @cTT
-
-	WHILE(@@FETCH_STATUS=0)
+	IF(@flagJ=1)
 	BEGIN
-		INSERT INTO Punya
-		SELECT @idBBaru,@cTT
+		INSERT INTO @tempTT
+		SELECT Tag.IdT,Tag.Nama_Tag
+		FROM Tag INNER JOIN @tags as t on Tag.Nama_Tag=t.tag
+		ORDER BY Tag.IdT	
+	
+		DECLARE curTT CURSOR
+		FOR
+		SELECT id
+		FROM @tempTT
+		ORDER BY id
+
+		OPEN curTT
+
+		DECLARE @cTT int
 
 		FETCH NEXT FROM curTT INTO @cTT
+
+		WHILE(@@FETCH_STATUS=0)
+		BEGIN
+			INSERT INTO Punya
+			SELECT @idBBaru,@cTT
+
+			FETCH NEXT FROM curTT INTO @cTT
+		END
+
+		CLOSE curTT
+		DEALLOCATE curTT
+
+		EXEC InsertBobotKatadanMengandung
 	END
-
-	CLOSE curTT
-	DEALLOCATE curTT
-
-	DECLARE @idEB int
-	SELECT @idEB = COUNT(IdE)FROM Eksemplar
-	SET @idEB=@idEB+1
-
-	INSERT INTO Eksemplar
-	SELECT @idEB,@idBBaru,1
 	
-	EXEC InsertBobotKatadanMengandung
-
 
 	go
 
