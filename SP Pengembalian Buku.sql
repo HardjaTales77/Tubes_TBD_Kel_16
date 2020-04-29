@@ -1,3 +1,8 @@
+/*
+- SP ini merupakan procedure untuk pengembalianBuku, digunakan saat User akan mengembalikan buku yang telah dipinjam
+- SP ini menerima parameter masukan berupa nama dari User yang meminjam, juga judul buku yang akan dikembalikan
+*/
+
 ALTER PROCEDURE pengembalianBuku
 (
 	@namaUser varchar(40),
