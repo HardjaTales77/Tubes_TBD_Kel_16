@@ -8,8 +8,6 @@ ALTER PROCEDURE pengembalianBuku
 	@namaUser varchar(40),
 	@judulBuku varchar(100)
 ) as
-	DECLARE @res varchar(50)
-
 	DECLARE @idUser int
 	SET @idUser = dbo.cariIdUser(@namaUser)
 
