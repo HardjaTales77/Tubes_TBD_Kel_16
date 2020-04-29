@@ -1,3 +1,7 @@
+/*
+	Prosedur ini berfungsi untuk menambahkan buku yang baru.
+	Menerima masukan judul buku yang baru, tag yang berhubungan dan nama penulis buku tersebut.
+*/
 ALTER PROCEDURE addBuku @judul varchar(100), @tag varchar(100), @author varchar(100)
 AS
 	DECLARE @tags table(
