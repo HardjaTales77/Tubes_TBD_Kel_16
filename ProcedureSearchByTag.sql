@@ -1,3 +1,8 @@
+/*
+	Prosedur ini berfungsi untuk mengembalikan semua judul buku yang berhubungan dengan tag.
+	Menerima masukan String berisi Tag.
+	Mengembalikan keluaran judul buku beserta skor banyak tag yang terpenuhi dari query.
+*/
 ALTER PROCEDURE searchByTag @masukan varchar(50)
 AS
 	DECLARE @temp table(
