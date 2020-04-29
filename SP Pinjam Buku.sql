@@ -1,3 +1,8 @@
+/*
+- SP ini merupakan procedure untuk peminjaman buku
+- SP ini memiliki parameter masukan berupa nama dari user yang akan meminjam dan judul buku yang akan di pinjam
+*/
+
 CREATE PROCEDURE pinjamBuku
 (
 	@namaUser varchar(40),
