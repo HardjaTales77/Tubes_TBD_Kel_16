@@ -1,4 +1,4 @@
-CREATE PROCEDURE InsertBobotKatadanMengandung
+ALTER PROCEDURE InsertBobotKatadanMengandung
 AS
 	DECLARE @temp table(
 		id int,
@@ -18,6 +18,9 @@ AS
 		Kata varchar(50),
 		Banyak int
 	)
+
+	DELETE FROM Kata
+	DELETE FROM Mengandung
 
 	DECLARE @totalBuku int
 	SELECT @totalBuku = COUNT(IdB) FROM Buku
@@ -116,13 +119,7 @@ AS
 	CLOSE curBanyak
 	DEALLOCATE curKata
 	DEALLOCATE curBanyak
-
-	SELECT *
-	FROM Mengandung
-
-	SELECT *
-	FROM Kata
-
+	
 	go
 
 EXEC InsertBobotKatadanMengandung
