@@ -1,3 +1,8 @@
+/*
+	Fungsi ini membagi String menjadi beberapa kata dalam tabel.
+	Pembagi adalah spasi dan tanda kome ( , ).
+	Menerima masukan string dan mengembalikan sebuah tabel yang berisi kata dalam string
+*/
 ALTER FUNCTION wordSplit
 (
 	@barisKata varchar(100)
