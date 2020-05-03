@@ -200,4 +200,5 @@ AS
 
 	go
 
-EXEC addBuku 'Overlord','Adventure,Dark,Isekai','Maruyama Kagune'
+EXEC addBuku 'Sword Art Online','Adventure,Fantasy,Sci-Fi','Reki Kawahara'
+

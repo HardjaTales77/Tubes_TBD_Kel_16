@@ -34,58 +34,10 @@ AS
 	SELECT id,kata
 	FROM insertTabelKata()
 
-	DECLARE curJB CURSOR
-	FOR
-	SELECT Judul_buku
-	FROM Buku
-	ORDER BY IdB
-
-	DECLARE curIdB CURSOR
-	FOR
-	SELECT IdB
-	FROM Buku
-	ORDER BY IdB
-
-	DECLARE @curB varchar(100)
-	DECLARE @curI int
-
-	OPEN curIdB
-	OPEN curJB
-
-	FETCH NEXT FROM curJB INTO @curB
-	FETCH NEXT FROM curIdB INTO @curI
-
-	WHILE(@@FETCH_STATUS=0)
-	BEGIN
-		INSERT INTO @temp2
-		SELECT kata
-		FROM wordSplit(@curB)
-
-		INSERT INTO @mengandung
-		SELECT a.id, @curI
-		FROM @temp as a INNER JOIN @temp2 as t on a.kata=t.word
-		WHERE a.kata=t.word
-		GROUP BY a.id
-
-		DELETE FROM @temp2
-
-		FETCH NEXT FROM curJB INTO @curB
-		FETCH NEXT FROM curIdB INTO @curI
-	END
-
-	CLOSE curJB
-	CLOSE curIdB
-	DEALLOCATE curJB
-	DEALLOCATE curIdB
-
 	INSERT INTO @banyak
-	SELECT a.Kata, COUNT(B.IdB)
-	FROM @temp as a INNER JOIN @mengandung as b on a.id=b.IdK 
+	SELECT a.Kata, COUNT(a.Kata)
+	FROM @temp as a 
 	GROUP BY a.Kata
-
-	INSERT INTO Mengandung
-	SELECT IdK,IdB
-	FROM @mengandung
 
 	DECLARE curKata CURSOR
 	FOR
@@ -125,6 +77,54 @@ AS
 	DEALLOCATE curKata
 	DEALLOCATE curBanyak
 	
+	DECLARE curJB CURSOR
+	FOR
+	SELECT Judul_buku
+	FROM Buku
+	ORDER BY IdB
+
+	DECLARE curIdB CURSOR
+	FOR
+	SELECT IdB
+	FROM Buku
+	ORDER BY IdB
+
+	DECLARE @curB varchar(100)
+	DECLARE @curI int
+
+	OPEN curIdB
+	OPEN curJB
+
+	FETCH NEXT FROM curJB INTO @curB
+	FETCH NEXT FROM curIdB INTO @curI
+
+	WHILE(@@FETCH_STATUS=0)
+	BEGIN
+		INSERT INTO @temp2
+		SELECT kata
+		FROM wordSplit(@curB)
+
+		INSERT INTO @mengandung
+		SELECT Kata.IdK, @curI
+		FROM Kata INNER JOIN @temp2 as t on Kata.Kata=t.word
+
+		DELETE FROM @temp2
+
+		FETCH NEXT FROM curJB INTO @curB
+		FETCH NEXT FROM curIdB INTO @curI
+	END
+
+	CLOSE curJB
+	CLOSE curIdB
+	DEALLOCATE curJB
+	DEALLOCATE curIdB
+
+	INSERT INTO Mengandung
+	SELECT IdK,IdB
+	FROM @mengandung
+
 	go
 
 EXEC InsertBobotKatadanMengandung
+
+SELECT * FROM Mengandung
