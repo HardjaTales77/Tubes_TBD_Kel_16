@@ -62,9 +62,7 @@ BEGIN
 	END
 
 	CLOSE curKata
-	CLOSE curIdf
 	DEALLOCATE curKata
-	DEALLOCATE curIdf
 
 RETURN
 END
