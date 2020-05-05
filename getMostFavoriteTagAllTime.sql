@@ -1,7 +1,7 @@
 /*
 	merupakan fitur untuk menampilkan tag terfavorit sesuai dengan IdMember
 	TANPA filter waktu 
-	INPUT	 : IdMember, waktuAwal, waktuAkhir
+	INPUT	 : IdMember
 	OUTPUT	 : berisi TOP 5 tag dengan total terbanyak dalam waktu selamanya
 			   yaitu IdTag, Nama Tag, Total 
 */
@@ -30,7 +30,7 @@ FROM Punya INNER JOIN Buku ON Punya.IdB=Buku.IdB
 INNER JOIN #judulPinjam ON Buku.Judul_buku=#judulPinjam.gtw
 GROUP BY Punya.IdT 
 
-SELECT #temp.IdT,Nama_Tag,#temp.Total
+SELECT TOP 5 Nama_Tag
 FROM Tag INNER JOIN #temp ON Tag.idT=#temp.IdT
 ORDER BY #temp.Total DESC
 
