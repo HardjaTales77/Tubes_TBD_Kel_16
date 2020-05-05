@@ -21,7 +21,6 @@ AS
 	DELETE FROM Punya WHERE IdB=@idInput
 	DELETE FROM Mencari WHERE IdB=@idInput
 	DELETE FROM Eksemplar WHERE IdB=@idInput
-	DELETE FROM Buku WHERE IdB=@idInput
 
 	DECLARE curP CURSOR
 	FOR
@@ -43,6 +42,8 @@ AS
 
 	CLOSE curP
 	DEALLOCATE curP
+
+	DELETE FROM Buku WHERE IdB=@idInput
 
 	DECLARE curBuku CURSOR
 	FOR

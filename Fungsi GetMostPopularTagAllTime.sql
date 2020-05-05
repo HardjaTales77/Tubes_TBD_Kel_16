@@ -1,3 +1,8 @@
+/*
+- Fungsi ini digunakan untuk mencari 5 tag dari buku yang paling sering di pinjam oleh user secara keseluruhan
+- Fungsi ini tidak memiliki masukan dan menghasilkan 5 nama tag buku yang paling sering dipinjam.
+*/
+
 ALTER FUNCTION getMostPopularTagAllTime()
 RETURNS @res table(
 	Nama_Tag varchar(25)
