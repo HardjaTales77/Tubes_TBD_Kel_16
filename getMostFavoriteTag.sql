@@ -23,52 +23,29 @@ SELECT IdE
 FROM Meminjam
 WHERE IdU=@idM AND waktuPinjam BETWEEN @waktuAwal and @waktuAkhir
 
-DECLARE curBuku CURSOR
-	FOR
-	SELECT IdE
-	FROM #tbl_temp2
-
-	OPEN curBuku
-
-	DECLARE @varBuku INT
-
-	FETCH NEXT FROM curBuku INTO @varBuku
-
-	WHILE(@@FETCH_STATUS=0)
-	BEGIN
-		INSERT INTO #tbl_temp
-		SELECT Judul_Buku
-		FROM #tbl_temp2 INNER JOIN Eksemplar ON #tbl_temp2.IdE=Eksemplar.IdE INNER JOIN Buku ON Buku.IdB=Eksemplar.IdB
-
-		FETCH NEXT FROM curBuku INTO @varBuku
-	END
-
-	CLOSE curBuku
-	DEALLOCATE curBuku
-
 create table #temp(
 	IdT INT,
 	Total INT
 )
 
 create table #distinct(
-	JudulBuku varchar(50)
+	IdB INT
 )
 
 INSERT INTO #distinct
-SELECT DISTINCT*
-FROM #tbl_temp
+SELECT DISTINCT IdB
+FROM #tbl_temp2 INNER JOIN Eksemplar ON #tbl_temp2.IdE=Eksemplar.IdE
 
 insert into #temp
 SELECT Punya.IdT,COUNT(Punya.IdT) as Total
 FROM Punya INNER JOIN Buku ON Punya.IdB=Buku.IdB 
-INNER JOIN #distinct ON Buku.Judul_buku=#distinct.JudulBuku
+INNER JOIN #distinct ON Buku.IdB=#distinct.IdB
 GROUP BY Punya.IdT 
 
+/*kalau mau lihat jumlahnya tinggal tambah #temp.Total*/
 SELECT TOP 5 Nama_Tag
 FROM Tag INNER JOIN #temp ON Tag.idT=#temp.IdT
 ORDER BY #temp.Total DESC
-
 
 go
 
