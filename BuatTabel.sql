@@ -16,17 +16,20 @@ DROP TABLE Mengandung
 
 CREATE TABLE Tag(
 	IdT int,
-	Nama_Tag varchar(25)
+	Nama_Tag varchar(25),
+	PRIMARY KEY(IdT)
 )
 
 CREATE TABLE Buku(
 	IdB int,
-	Judul_buku varchar(100)
+	Judul_buku varchar(100),
+	PRIMARY KEY(IdB)
 )
 
 CREATE TABLE Author(
 	IdAuthor int,
-	Nama varchar(100)
+	Nama varchar(100),
+	PRIMARY KEY(IdAuthor)
 )
 
 CREATE TABLE Mengarang(
@@ -42,12 +45,14 @@ CREATE TABLE Punya(
 CREATE TABLE Eksemplar(
 	IdE int,
 	IdB int,
-	Status int
+	Status int,
+	PRIMARY KEY(IdE)
 )
 
 CREATE TABLE Users(
 	IdU int,
-	Nama_user varchar(40)
+	Nama_user varchar(40),
+	PRIMARY KEY(IdU)
 )
 
 CREATE TABLE Mencari(
@@ -66,7 +71,8 @@ CREATE TABLE Meminjam(
 CREATE TABLE Kata(
 	IdK int,
 	Kata varchar(100),
-	Bobot float
+	Bobot float,
+	PRIMARY KEY(IdK)
 )
 
 CREATE TABLE Mengandung(

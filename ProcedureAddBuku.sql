@@ -186,7 +186,7 @@ AS
 		WHILE(@@FETCH_STATUS=0)
 		BEGIN
 			INSERT INTO Punya
-			SELECT @idBBaru,@cTT
+			SELECT @cTT,@idBBaru
 
 			FETCH NEXT FROM curTT INTO @cTT
 		END

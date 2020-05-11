@@ -24,8 +24,8 @@ AS
 		Banyak int
 	)
 
-	DELETE FROM Kata
 	DELETE FROM Mengandung
+	DELETE FROM Kata
 
 	DECLARE @totalBuku int
 	SELECT @totalBuku = COUNT(IdB) FROM Buku
